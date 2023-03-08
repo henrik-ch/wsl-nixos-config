@@ -17,7 +17,7 @@ in
     enable = true;
     nativeSystemd = true;
     wslConf.automount.root = "/mnt";
-    defaultUser = "nixos";
+    defaultUser = "i97henka";
     startMenuLaunchers = true;
 
     # Enable native Docker support
@@ -34,14 +34,27 @@ in
     experimental-features = nix-command flakes
   '';
 
+  users.users.i97henka = {
+    isNormalUser = true;
+    extraGroups = [ "wheel"];
+  };
 
-  #programs.nixvim.enable = true;
-
-  users.users.i97henka.isNormalUser = true;
   home-manager.users.i97henka = { pkgs, ... }: {
     home.stateVersion = "22.11";
     home.packages = [ pkgs.jq pkgs.ripgrep pkgs.gh ];
-    programs.bash.enable = true;
+
+    programs.bash = {
+      enable = true;
+      shellAliases = {
+        ll = "ls -l";
+        ".." = "cd ..";
+        gst = "git status";
+        glo = "git log --oneline";
+        gfa = "git fetch --all";
+        ggfl = "git push --force-with-lease";
+      };
+    };
+
     programs.git.enable = true;
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
@@ -54,13 +67,6 @@ in
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
-    #  plugins = with pkgs.vimPlugins; [
-	#nvim-lspconfig
-	#nvim-treesitter.withAllGrammars
-	#plenary-nvim
-	#gruvbox-material
-	#mini-nvim
-    #  ];
     };
   };
 
@@ -70,6 +76,12 @@ in
     git
     vim
   ];
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryFlavor = "curses";
+  };
 
   system.stateVersion = "22.11";
 }
