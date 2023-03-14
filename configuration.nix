@@ -15,7 +15,7 @@ in
 
   wsl = {
     enable = true;
-    nativeSystemd = true;
+    nativeSystemd = false;
     wslConf.automount.root = "/mnt";
     defaultUser = "i97henka";
     startMenuLaunchers = true;
@@ -39,9 +39,12 @@ in
     extraGroups = [ "wheel"];
   };
 
+
   home-manager.users.i97henka = { pkgs, ... }: {
     home.stateVersion = "22.11";
     home.packages = [ pkgs.jq pkgs.ripgrep pkgs.gh ];
+ 
+    nixpkgs.config.allowUnfree = true;
 
     programs.bash = {
       enable = true;
@@ -60,7 +63,9 @@ in
     programs.direnv.nix-direnv.enable = true;
     programs.fzf.enable = true;
     programs.bat.enable = true;
-    
+
+    programs.vscode.enable = true;
+
     programs.neovim = {
       enable = true;
       defaultEditor = true;
@@ -75,7 +80,10 @@ in
     bat
     git
     vim
+    wget
   ];
+
+  programs.nix-ld.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
