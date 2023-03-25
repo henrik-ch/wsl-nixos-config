@@ -43,9 +43,10 @@ in
   home-manager.users.i97henka = { pkgs, ... }: {
     home.stateVersion = "22.11";
     home.packages = [ pkgs.jq pkgs.ripgrep pkgs.gh ];
- 
+    home.sessionVariables =  {
+      DONT_PROMPT_WSL_INSTALL = "YES";
+    };
     nixpkgs.config.allowUnfree = true;
-
     programs.bash = {
       enable = true;
       shellAliases = {
@@ -65,6 +66,8 @@ in
     programs.bat.enable = true;
 
     programs.vscode.enable = true;
+
+    programs.firefox.enable = true;
 
     programs.neovim = {
       enable = true;
