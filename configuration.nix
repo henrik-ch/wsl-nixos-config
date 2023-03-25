@@ -65,7 +65,15 @@ in
     programs.fzf.enable = true;
     programs.bat.enable = true;
 
-    programs.vscode.enable = true;
+    programs.vscode  = {
+      enable = true;
+      package = pkgs.vscode;
+      extensions = with pkgs.vscode-extensions; [
+        bbenoist.nix
+	      mechatroner.rainbow-csv
+        github.copilot
+      ];
+    };
 
     programs.firefox.enable = true;
 
@@ -78,11 +86,13 @@ in
     };
   };
 
+  services.gnome.gnome-keyring.enable = true;
 
   environment.systemPackages = with pkgs; [
     bat
     git
     vim
+    gnome.seahorse
     wget
   ];
 
