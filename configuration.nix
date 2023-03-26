@@ -15,7 +15,7 @@ in
 
   wsl = {
     enable = true;
-    nativeSystemd = false;
+    nativeSystemd = true;
     wslConf.automount.root = "/mnt";
     defaultUser = "i97henka";
     startMenuLaunchers = true;
@@ -83,6 +83,9 @@ in
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      extraConfig = ''
+        set number
+      '';
     };
   };
 
